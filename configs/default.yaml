@@ -1,0 +1,181 @@
+# =============================================================================
+# VisionFusion AI — Default Configuration
+# Unified Computer Vision Perception System
+# =============================================================================
+
+system:
+  name: "VisionFusion-AI"
+  version: "1.0.0"
+  device: "auto"           # auto | cpu | cuda | mps
+  log_level: "INFO"
+  seed: 42
+
+# ---------------------------------------------------------------------------
+# Input / Source
+# ---------------------------------------------------------------------------
+input:
+  mode: "webcam"           # webcam | video | image
+  source: 0                # int=camera index, str=path
+  width: 1280
+  height: 720
+  fps: 30
+  flip: 1                  # 1=horizontal mirror (default), 0=vertical, -1=both, null=off
+
+# ---------------------------------------------------------------------------
+# Preprocessing
+# ---------------------------------------------------------------------------
+preprocessing:
+  resize: [640, 480]
+  normalize: true
+  denoise: true
+  denoise_method: "gaussian"   # gaussian | bilateral | median
+  denoise_kernel: 5
+  color_space: "BGR"           # BGR | RGB | GRAY | HSV | LAB
+
+# ---------------------------------------------------------------------------
+# Edge Detection
+# ---------------------------------------------------------------------------
+edge_detection:
+  enabled: true
+  method: "canny"              # canny | sobel | laplacian | scharr
+  canny_threshold1: 50
+  canny_threshold2: 150
+  canny_aperture: 3
+  overlay_alpha: 0.4
+
+# ---------------------------------------------------------------------------
+# Face Detection
+# ---------------------------------------------------------------------------
+face_detection:
+  enabled: true
+  method: "dnn"                # haar | dnn | mediapipe
+  dnn_model: "models/pretrained/res10_300x300_ssd_iter_140000.caffemodel"
+  dnn_config: "models/pretrained/deploy.prototxt"
+  haar_cascade: "haarcascade_frontalface_default.xml"
+  confidence_threshold: 0.7
+  draw_landmarks: true
+  blur_faces: false
+
+# ---------------------------------------------------------------------------
+# Motion Detection
+# ---------------------------------------------------------------------------
+motion_detection:
+  enabled: true
+  method: "mog2"               # mog2 | knn | frame_diff
+  min_area: 800
+  history: 500
+  var_threshold: 16
+  detect_shadows: true
+  blur_kernel: 21
+
+# ---------------------------------------------------------------------------
+# Object Detection
+# ---------------------------------------------------------------------------
+object_detection:
+  enabled: true
+  method: "yolov8"              # yolo | ssd | yolov8
+  # when using yolov8, the package will download weights automatically
+  yolov8_model: "yolov8n.pt"    # small model by default; change as needed
+  track: true                    # use YOLOv8 built-in tracking
+  model_path: "models/pretrained/yolov3.weights"  # unused for yolov8
+  config_path: "models/pretrained/yolov3.cfg"    # unused for yolov8
+  classes_path: "data/coco_classes.txt"
+  confidence_threshold: 0.5
+  nms_threshold: 0.4
+  input_size: [416, 416]
+
+# ---------------------------------------------------------------------------
+# Contour Analysis
+# ---------------------------------------------------------------------------
+contour_analysis:
+  enabled: true
+  min_area: 500
+  approx_epsilon: 0.02
+  draw_bounding_rect: true
+  draw_convex_hull: false
+  show_shape_labels: true
+
+# ---------------------------------------------------------------------------
+# CNN Classifier
+# ---------------------------------------------------------------------------
+cnn_classifier:
+  enabled: false
+  model_path: "models/trained/classifier.pth"
+  architecture: "resnet18"     # resnet18 | resnet50 | mobilenet_v2 | efficientnet_b0
+  num_classes: 10
+  input_size: [224, 224]
+  confidence_threshold: 0.6
+  dataset: "cifar10"           # cifar10 | imagenet | custom
+
+# ---------------------------------------------------------------------------
+# Tracking
+# ---------------------------------------------------------------------------
+tracking:
+  enabled: true
+  algorithm: "csrt"            # csrt | kcf | medianflow | mosse | sort
+  max_disappeared: 30
+  max_distance: 50
+  iou_threshold: 0.3
+
+# ---------------------------------------------------------------------------
+# Semantic Segmentation
+# ---------------------------------------------------------------------------
+segmentation:
+  enabled: false
+  model: "fcn_resnet50"
+  num_classes: 21              # Pascal VOC
+  confidence_threshold: 0.5
+
+# ---------------------------------------------------------------------------
+# Visualization
+# ---------------------------------------------------------------------------
+visualization:
+  show_fps: true
+  show_timestamp: true
+  show_labels: true
+  show_confidence: true
+  bbox_thickness: 2
+  font_scale: 0.6
+  overlay_edges: true
+  panel_mode: "combined"       # combined | split | minimal
+  color_scheme: "vivid"        # vivid | pastel | mono
+
+# ---------------------------------------------------------------------------
+# Evaluation
+# ---------------------------------------------------------------------------
+evaluation:
+  metrics: ["accuracy", "precision", "recall", "f1", "mAP"]
+  iou_threshold: 0.5
+  output_dir: "evaluation/results"
+  save_plots: true
+  save_confusion_matrix: true
+
+# ---------------------------------------------------------------------------
+# Training
+# ---------------------------------------------------------------------------
+training:
+  epochs: 50
+  batch_size: 32
+  learning_rate: 0.001
+  weight_decay: 0.0001
+  scheduler: "cosine"
+  warmup_epochs: 5
+  checkpoint_dir: "models/checkpoints"
+  save_best_only: true
+  early_stopping_patience: 10
+
+# ---------------------------------------------------------------------------
+# Dataset Loaders
+# ---------------------------------------------------------------------------
+datasets:
+  cifar10:
+    root: "data/cifar10"
+    download: true
+  coco:
+    root: "data/coco"
+    annotation_file: "data/coco/annotations/instances_val2017.json"
+  custom:
+    root: "data/custom"
+    train_split: 0.8
+    val_split: 0.1
+    test_split: 0.1
