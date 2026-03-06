@@ -1,0 +1,45 @@
+# ===========================================================================
+# VisionFusion AI — Python Dependencies
+# ===========================================================================
+
+# Core computer vision & image processing
+opencv-python>=4.8.0
+opencv-contrib-python>=4.8.0   # additional trackers, stitching, etc.
+numpy>=1.24.0
+Pillow>=10.0.0
+
+# Deep learning — PyTorch stack (CPU build; swap for GPU variant as needed)
+torch>=2.1.0
+torchvision>=0.16.0
+
+# Pose / face / hand estimation
+mediapipe>=0.10.0
+
+# Configuration & serialization
+PyYAML>=6.0.1
+
+# Plotting & visualization
+matplotlib>=3.8.0
+seaborn>=0.13.0
+
+# Machine learning utilities
+scikit-learn>=1.3.0
+
+# Dataset tools
+pycocotools>=2.0.7           # COCO dataset support
+
+# Experiment tracking (optional)
+tensorboard>=2.14.0
+
+# Notebook support
+jupyter>=1.0.0
+
+# YOLOv8 detection/tracking
+ultralytics>=8.0.0
+ipykernel>=6.25.0
+ipywidgets>=8.1.0
+
+# Linting / type checking (dev only)
+# ruff
+# mypy
+# pytest
