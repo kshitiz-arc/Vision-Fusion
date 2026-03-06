@@ -355,5 +355,4 @@ This project is released under the **MIT License** — see [LICENSE](LICENSE) fo
 ---
 
 ## Acknowledgements
-
-Originally inspired by the OpenCV mini-project collection by [TusharSSurve](https://github.com/TusharSSurve/OpenCV). YOLOv8 is provided by [Ultralytics](https://ultralytics.com). Pre-trained face detection models are from the OpenCV DNN model zoo.
+YOLOv8 is provided by [Ultralytics](https://ultralytics.com). Pre-trained face detection models are from the OpenCV DNN model zoo.
